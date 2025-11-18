@@ -1,10 +1,11 @@
 package scryfall
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/bytedance/sonic"
 )
 
 type Card struct {
@@ -116,9 +117,9 @@ type Legalities struct {
 	Standard        string `json:"standard"`
 	Future          string `json:"future"`
 	Historic        string `json:"historic"`
+	Timeless        string `json:"timeless"`
 	Gladiator       string `json:"gladiator"`
 	Pioneer         string `json:"pioneer"`
-	Explorer        string `json:"explorer"`
 	Modern          string `json:"modern"`
 	Legacy          string `json:"legacy"`
 	Pauper          string `json:"pauper"`
@@ -126,8 +127,8 @@ type Legalities struct {
 	Penny           string `json:"penny"`
 	Commander       string `json:"commander"`
 	Oathbreaker     string `json:"oathbreaker"`
+	Standardbrawl   string `json:"standardbrawl"`
 	Brawl           string `json:"brawl"`
-	Historicbrawl   string `json:"historicbrawl"`
 	Alchemy         string `json:"alchemy"`
 	Paupercommander string `json:"paupercommander"`
 	Duel            string `json:"duel"`
@@ -146,10 +147,10 @@ type Prices struct {
 }
 
 type RelatedURIs struct {
-	Gatherer       string `json:"gatherer"`
-	TcgplayerDecks string `json:"tcgplayer_decks"`
-	EDHREC         string `json:"edhrec"`
-	MTGTop8        string `json:"mtgtop8"`
+	Gatherer         string `json:"gatherer"`
+	TCGPlayerArticle string `json:"tcgplayer_infinite_article"`
+	TCGPlayerDecks   string `json:"tcgplayer_infinite_decks"`
+	EDHREC           string `json:"edhrec"`
 }
 
 type PurchaseURIs struct {
@@ -183,7 +184,7 @@ func (scryfall *Scryfall) FindCardByID(id string) (*Card, error) {
 	}
 
 	var card Card
-	err = json.Unmarshal(body, &card)
+	err = sonic.Unmarshal(body, &card)
 	if err != nil {
 		return nil, err
 	}

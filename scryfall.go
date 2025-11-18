@@ -4,9 +4,7 @@ import (
 	"net/http"
 )
 
-const (
-	APIBaseURL = "https://api.scryfall.com/cards"
-)
+const APIBaseURL = "https://api.scryfall.com/cards/"
 
 type Scryfall struct {
 	baseURL    string
