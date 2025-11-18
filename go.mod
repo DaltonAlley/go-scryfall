@@ -1,4 +1,4 @@
-module github.com/DaltonAlley/go-scryfall
+module github.com/daltonalley/go-scryfall
 
 go 1.25.3
 
