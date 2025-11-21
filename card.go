@@ -159,16 +159,17 @@ type PurchaseURIs struct {
 	Cardhoarder string `json:"cardhoarder"`
 }
 
-func (scryfall *Scryfall) FindCardByID(id string) (*Card, error) {
-	req, err := http.NewRequest("GET", scryfall.baseURL+id, nil)
+func FindCardByID(id string) (*Card, error) {
+	req, err := http.NewRequest("GET", APIBaseURL+id, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	req.Header.Set("User-Agent", "go-scryfall/1.0")
+	req.Header.Set("User-Agent", "go-scryfall/0.1.2")
 	req.Header.Set("Accept", "application/json")
 
-	resp, err := scryfall.httpClient.Do(req)
+	c := http.Client{}
+	resp, err := c.Do(req)
 	if err != nil {
 		return nil, err
 	}

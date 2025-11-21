@@ -10,9 +10,6 @@ import (
 )
 
 func TestFindCardByID(t *testing.T) {
-	client := NewClient(&http.Client{})
-
-	// Fetch a random card from Scryfall API
 	resp, err := http.Get("https://api.scryfall.com/cards/random")
 	require.NoError(t, err)
 	defer resp.Body.Close()
@@ -22,8 +19,7 @@ func TestFindCardByID(t *testing.T) {
 	var randomCard Card
 	require.NoError(t, json.NewDecoder(resp.Body).Decode(&randomCard))
 
-	// Use the ID from the random card to test FindCardByID
-	foundCard, err := client.FindCardByID(randomCard.ID)
+	foundCard, err := FindCardByID(randomCard.ID)
 	require.NoError(t, err)
 
 	assert.Equal(t, randomCard.ID, foundCard.ID, "Expected ID %s, got %s", randomCard.ID, foundCard.ID)
